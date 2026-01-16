@@ -1,0 +1,485 @@
+/**
+ * =============================================================================
+ * TABLE STYLES v4 - EXACT MATCH TO REFERENCE IMAGES
+ * =============================================================================
+ * 
+ * Key design elements from reference:
+ * 1. NO search bar visible (hidden)
+ * 2. THICK dark border (2-3px) around inner table
+ * 3. Large bold title with thick green gradient underline
+ * 4. Status badges: Approved=green outline, Pending=yellow/amber outline
+ * 5. More generous row padding (14-16px)
+ * 6. Rounded corners on table wrapper
+ * 
+ * =============================================================================
+ */
+
+/* =============================================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================================= */
+
+:root {
+    /* Primary Colors - DARKER GREEN for headers */
+    --table-primary: #143d14;
+    --table-primary-dark: #0a2a0a;
+    --table-header-text: #ffffff;
+
+    /* Container */
+    --table-container-bg: #ffffff;
+    --table-border-color: #143d14;
+
+    /* Status Badge Colors */
+    --status-approved-color: #2e7d32;
+    --status-pending-color: #c68a00;
+    --status-rejected-color: #c62828;
+}
+
+/* =============================================================================
+   TABLE CARD - Outer Container (Light gray background card)
+   ============================================================================= */
+
+.table-card {
+    background: #ffffff !important;
+    border: 2px solid #143d14 !important;
+    border-radius: 12px !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12) !important;
+    padding: 28px !important;
+    margin-bottom: 24px !important;
+}
+
+/* =============================================================================
+   SECTION TITLE - Large with thick gradient underline
+   ============================================================================= */
+
+.table-card .table-card-title {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    font-size: 1.35rem !important;
+    font-weight: 700 !important;
+    color: var(--table-primary) !important;
+    margin-bottom: 12px !important;
+    border-bottom: none !important;
+    padding-bottom: 0 !important;
+}
+
+.table-card .table-card-title .title-icon {
+    font-size: 1.3rem !important;
+}
+
+.table-card .table-card-title-underline {
+    height: 3px !important;
+    background: linear-gradient(90deg, var(--table-primary) 0%, #4a9c4a 40%, transparent 100%) !important;
+    border-radius: 2px !important;
+    margin-bottom: 24px !important;
+}
+
+/* =============================================================================
+   SEARCH BAR - Full width with descriptive placeholder
+   ============================================================================= */
+
+.table-card .table-search-container {
+    display: block !important;
+    margin-bottom: 16px !important;
+    margin-top: 8px !important;
+}
+
+.table-card .table-search-input {
+    width: 100% !important;
+    padding: 14px 18px !important;
+    border: 2px solid #143d14 !important;
+    border-radius: 8px !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s ease !important;
+    background-color: #fafafa !important;
+    background-image: none !important;
+}
+
+.table-card .table-search-input::placeholder {
+    color: #666 !important;
+    font-size: 0.9rem !important;
+}
+
+.table-card .table-search-input:focus {
+    outline: none !important;
+    border-color: #0a2a0a !important;
+    background-color: #fff !important;
+    box-shadow: 0 0 0 3px rgba(20, 61, 20, 0.1) !important;
+}
+
+.table-card .table-search-hint {
+    display: none !important;
+}
+
+/* =============================================================================
+   TABLE WRAPPER - THICK DARK BORDER with rounded corners
+   ============================================================================= */
+
+.table-card .table-wrapper {
+    border: 2px solid var(--table-border-color) !important;
+    border-radius: 10px !important;
+    overflow-x: auto !important;
+    /* Allow horizontal scroll */
+    background: #fff !important;
+}
+
+/* =============================================================================
+   DATA TABLE
+   ============================================================================= */
+
+.table-card .table-wrapper table.data-table {
+    width: 100% !important;
+    min-width: 1000px !important;
+    /* Force minimum width to trigger scroll on small screens */
+    border-collapse: collapse !important;
+    font-size: 0.9rem !important;
+    margin-top: 0 !important;
+    background: #fff !important;
+}
+
+/* =============================================================================
+   TABLE HEADER - Deep forest green
+   ============================================================================= */
+
+.table-card .table-wrapper table.data-table thead {
+    background: var(--table-primary) !important;
+}
+
+.table-card .table-wrapper table.data-table thead tr {
+    background: var(--table-primary) !important;
+}
+
+.table-card .table-wrapper table.data-table thead th {
+    padding: 14px 16px !important;
+    text-align: left !important;
+    font-weight: 600 !important;
+    color: var(--table-header-text) !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.8px !important;
+    border: none !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.7) !important;
+    border-bottom: none !important;
+    white-space: nowrap !important;
+    background: var(--table-primary) !important;
+}
+
+.table-card .table-wrapper table.data-table thead th:last-child {
+    border-right: none !important;
+}
+
+/* =============================================================================
+   TABLE BODY ROWS - Taller with more padding
+   ============================================================================= */
+
+.table-card .table-wrapper table.data-table tbody tr {
+    border-bottom: 1px solid #e8e8e8 !important;
+    transition: background-color 0.15s ease !important;
+    background: #fff !important;
+}
+
+.table-card .table-wrapper table.data-table tbody tr:last-child {
+    border-bottom: none !important;
+}
+
+.table-card .table-wrapper table.data-table tbody tr:hover {
+    background-color: #f5faf5 !important;
+}
+
+.table-card .table-wrapper table.data-table tbody td {
+    padding: 14px 16px !important;
+    color: #333 !important;
+    vertical-align: middle !important;
+    border-bottom: none !important;
+    border-right: 1px solid #999999 !important;
+    background: transparent !important;
+    font-size: 0.88rem !important;
+    white-space: nowrap !important;
+    /* Prevent text wrapping */
+}
+
+.table-card .table-wrapper table.data-table tbody td:last-child {
+    border-right: none !important;
+}
+
+/* =============================================================================
+   STATUS BADGES - Outline style matching reference EXACTLY
+   
+   Reference shows:
+   - Approved: Green outline, no fill
+   - Pending: Yellow/amber outline, no fill
+   - Rejected: Red outline, no fill
+   ============================================================================= */
+
+.status-badge {
+    display: inline-block !important;
+    padding: 5px 16px !important;
+    border-radius: 4px !important;
+    font-size: 0.8rem !important;
+    font-weight: 600 !important;
+    text-transform: capitalize !important;
+    border: none !important;
+}
+
+.status-badge.approved {
+    color: #fff !important;
+    background: #2e7d32 !important;
+}
+
+.status-badge.pending {
+    color: #fff !important;
+    background: #f59e0b !important;
+}
+
+.status-badge.rejected {
+    color: #fff !important;
+    background: #dc2626 !important;
+}
+
+/* Role Badges */
+.status-badge.role-aggregator {
+    background: #3498db !important;
+    /* Blue */
+    color: #fff !important;
+}
+
+.status-badge.role-buyer {
+    background: #e67e22 !important;
+    /* Orange */
+    color: #fff !important;
+}
+
+/* =============================================================================
+   ACTION BUTTONS
+   ============================================================================= */
+
+.btn-action {
+    padding: 6px 12px !important;
+    border-radius: 4px !important;
+    font-size: 0.8rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    border: 1.5px solid !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 5px !important;
+    text-decoration: none !important;
+    white-space: nowrap !important;
+    /* Ensure button text doesn't wrap */
+    min-width: 80px !important;
+}
+
+.btn-view-docs,
+.btn-view-profile {
+    color: #555 !important;
+    border-color: #ccc !important;
+    background: #fff !important;
+}
+
+.btn-view-docs:hover,
+.btn-view-profile:hover {
+    background: #f5f5f5 !important;
+    border-color: #999 !important;
+}
+
+.btn-approve {
+    color: var(--status-approved-color) !important;
+    border-color: var(--status-approved-color) !important;
+    background: transparent !important;
+}
+
+.btn-approve:hover {
+    background: var(--status-approved-color) !important;
+    color: #fff !important;
+}
+
+.btn-reject {
+    color: var(--status-rejected-color) !important;
+    border-color: var(--status-rejected-color) !important;
+    background: transparent !important;
+}
+
+.btn-reject:hover {
+    background: var(--status-rejected-color) !important;
+    color: #fff !important;
+}
+
+.btn-action-group,
+.action-buttons {
+    display: flex !important;
+    gap: 8px !important;
+    flex-wrap: nowrap !important;
+    /* Force single line */
+    align-items: center !important;
+    justify-content: flex-start !important;
+    white-space: nowrap !important;
+    min-width: 220px !important;
+}
+
+/* =============================================================================
+   PAGINATION - Numbered Style
+   ============================================================================= */
+
+.table-pagination,
+.table-card .table-pagination {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 16px !important;
+    padding: 12px 0 !important;
+    border-top: 1px solid #eef1f6 !important;
+    gap: 16px !important;
+}
+
+.pagination-info-text {
+    font-size: 0.85rem !important;
+    color: #666 !important;
+}
+
+.pagination-info-text strong {
+    color: #333 !important;
+    font-weight: 600 !important;
+}
+
+.pagination-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+}
+
+.pagination-btn {
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    border: 1px solid #ddd !important;
+    border-radius: 4px !important;
+    background: #fff !important;
+    color: #333 !important;
+    font-size: 0.85rem !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+}
+
+.pagination-btn:hover:not(:disabled):not(.active) {
+    background: #f5f5f5 !important;
+    border-color: #bbb !important;
+}
+
+.pagination-btn.active {
+    background: #143d14 !important;
+    /* Dark Green */
+    color: #fff !important;
+    border-color: #143d14 !important;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.4 !important;
+    cursor: not-allowed !important;
+    background: #f9f9f9 !important;
+}
+
+.pagination-ellipsis {
+    padding: 0 6px !important;
+    color: #999 !important;
+    font-size: 0.85rem !important;
+}
+
+/* =============================================================================
+   EMPTY STATE
+   ============================================================================= */
+
+.table-card .table-wrapper table.data-table tbody td.no-data-message,
+.table-card .no-data-message,
+.no-data-message {
+    text-align: center !important;
+    padding: 40px 24px !important;
+    color: #666 !important;
+    font-size: 0.9rem !important;
+    background: #fff !important;
+}
+
+/* =============================================================================
+   SORTABLE HEADERS
+   ============================================================================= */
+
+.table-card .table-wrapper table.data-table thead th.sortable {
+    cursor: pointer !important;
+    user-select: none !important;
+    position: relative !important;
+    padding-right: 28px !important;
+}
+
+.table-card .table-wrapper table.data-table thead th.sortable:hover {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+
+.table-card .table-wrapper table.data-table thead th.sortable::after {
+    content: '⇅' !important;
+    position: absolute !important;
+    right: 10px !important;
+    opacity: 0.5 !important;
+    font-size: 0.85em !important;
+}
+
+.table-card .table-wrapper table.data-table thead th.sortable.asc::after {
+    content: '↑' !important;
+    opacity: 1 !important;
+}
+
+.table-card .table-wrapper table.data-table thead th.sortable.desc::after {
+    content: '↓' !important;
+    opacity: 1 !important;
+}
+
+/* =============================================================================
+   RESPONSIVE DESIGN
+   ============================================================================= */
+
+@media (max-width: 768px) {
+    .table-card {
+        padding: 20px !important;
+        border-radius: 8px !important;
+    }
+
+    .table-card .table-card-title {
+        font-size: 1.15rem !important;
+    }
+
+    .table-card .table-wrapper table.data-table thead th,
+    .table-card .table-wrapper table.data-table tbody td {
+        padding: 12px 12px !important;
+        font-size: 0.82rem !important;
+    }
+
+    .table-card .table-wrapper table.data-table thead th {
+        font-size: 0.7rem !important;
+    }
+
+    .table-card .table-pagination {
+        flex-direction: column !important;
+        gap: 12px !important;
+        align-items: flex-start !important;
+    }
+
+    .pagination-controls {
+        align-self: center !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .table-card .table-wrapper {
+        overflow-x: auto !important;
+    }
+
+    .table-card .table-wrapper table.data-table {
+        min-width: 600px !important;
+    }
+}

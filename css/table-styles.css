@@ -443,6 +443,35 @@
    RESPONSIVE DESIGN
    ============================================================================= */
 
+/* Always show horizontal scrollbar on table wrapper */
+.table-card .table-wrapper {
+    overflow-x: auto !important;
+    overflow-y: visible !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #143d14 #e0e0e0 !important;
+}
+
+/* Webkit scrollbar styling - always visible */
+.table-card .table-wrapper::-webkit-scrollbar {
+    height: 10px !important;
+    display: block !important;
+}
+
+.table-card .table-wrapper::-webkit-scrollbar-track {
+    background: #e0e0e0 !important;
+    border-radius: 5px !important;
+}
+
+.table-card .table-wrapper::-webkit-scrollbar-thumb {
+    background: #143d14 !important;
+    border-radius: 5px !important;
+}
+
+.table-card .table-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #0a2a0a !important;
+}
+
+
 @media (max-width: 768px) {
     .table-card {
         padding: 20px !important;

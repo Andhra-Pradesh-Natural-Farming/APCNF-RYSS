@@ -303,7 +303,15 @@ function changePage(type, newPage) {
 // ============================================================================
 
 window.approveCatchment = async function (acmId, villageName) {
-    if (!confirm(`Approve request for ${villageName}?`)) return;
+    const confirmed = await showConfirmModal({
+        title: 'Approve Catchment Request',
+        message: `Are you sure you want to approve the request for ${villageName}?`,
+        confirmText: 'Approve',
+        cancelText: 'Cancel',
+        type: 'success'
+    });
+    if (!confirmed) return;
+
     try {
         const response = await authFetch(`${API_BASE_URL}/api/catchment/approve/${acmId}`, { method: 'POST' });
         const data = await response.json();
@@ -316,8 +324,15 @@ window.approveCatchment = async function (acmId, villageName) {
 };
 
 window.rejectCatchment = async function (acmId, villageName) {
-    const r = prompt(`Reject request for ${villageName}? Reason:`);
-    if (!r) return;
+    const confirmed = await showConfirmModal({
+        title: 'Reject Catchment Request',
+        message: `Are you sure you want to reject the request for ${villageName}?`,
+        confirmText: 'Reject',
+        cancelText: 'Cancel',
+        type: 'danger'
+    });
+    if (!confirmed) return;
+
     try {
         const response = await authFetch(`${API_BASE_URL}/api/catchment/reject/${acmId}`, { method: 'POST' });
         const data = await response.json();

@@ -28,30 +28,3 @@
         </div>
     </div>
 </header>
-<script>
-    // Logout function for all pages
-    function handleLogout() {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        localStorage.removeItem('aggregatorId');
-        localStorage.removeItem('aggregatorName');
-        localStorage.removeItem('access_token');
-        localStorage.removeItem('user_id');
-        localStorage.removeItem('username');
-        localStorage.removeItem('user_role');
-        localStorage.removeItem('role');
-        sessionStorage.clear();
-        window.location.href = 'login.html';
-    }
-
-    // Set active nav link based on current page
-    document.addEventListener('DOMContentLoaded', function () {
-        const currentPage = window.location.pathname.split('/').pop();
-        const navLinks = document.querySelectorAll('.aggregator-header .nav-link');
-        navLinks.forEach(link => {
-            if (link.getAttribute('href') === currentPage) {
-                link.classList.add('active');
-            }
-        });
-    });
-</script>

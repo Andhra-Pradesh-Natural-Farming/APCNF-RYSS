@@ -258,8 +258,7 @@ try {
  * ============================================================================
  */
 window.logout = function () {
-    if (confirm('Are you sure you want to logout?')) {
-        localStorage.clear();
-        window.location.href = 'login.html';
-    }
+    // Logout directly without confirmation
+    localStorage.clear();
+    window.location.href = 'login.html';
 };

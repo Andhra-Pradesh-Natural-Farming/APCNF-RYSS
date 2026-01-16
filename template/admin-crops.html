@@ -7,6 +7,7 @@
     <title>APCNF-RySS Traceability - Crop Management</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/table-styles.css">
     <link rel="stylesheet" href="../css/responsive.css">
 </head>
 
@@ -17,29 +18,44 @@
 
         <main class="admin-content">
 
+            <!-- Crop Master List - Using table-card for consistent styling -->
+            <div class="table-card">
+                <div class="table-card-title">
+                    <span class="title-icon">🌾</span>
+                    <span>Crop Master List</span>
+                </div>
+                <div class="table-card-title-underline"></div>
 
-            <div class="card full-width-card">
-                <h3><i class="fa-solid fa-list-check"></i> Crop Master List</h3>
-                <div class="table-container" style="max-height: 600px; overflow-y: auto;">
+                <!-- Search Bar -->
+                <div class="table-search-container">
+                    <input type="text" class="table-search-input" id="cropSearch"
+                        placeholder="Search by: Crop ID, Crop Name, Storage Conditions..." oninput="searchCrops()">
+                </div>
+
+                <!-- Table Wrapper -->
+                <div class="table-wrapper">
                     <table class="data-table" id="crop-master-table">
                         <thead>
                             <tr>
-                                <th>Crop ID</th>
-                                <th>Crop Name</th>
-                                <th>Shelf Life (Days)</th>
-                                <th>Storage Conditions</th>
+                                <th class="sortable" data-sort="crop_id">Crop ID</th>
+                                <th class="sortable" data-sort="crop_name">Crop Name</th>
+                                <th class="sortable" data-sort="shelf_life">Shelf Life (Days)</th>
+                                <th class="sortable" data-sort="storage">Storage Conditions</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <!-- Loaded via JS -->
+                        <tbody id="cropTableBody">
                             <tr>
-                                <td colspan="6" class="text-center">Loading crops...</td>
+                                <td colspan="5" class="no-data-message">Loading crops...</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <!-- Pagination -->
+                <div id="cropPagination"></div>
             </div>
+
         </main>
 
         <div id="admin-footer-placeholder"></div>

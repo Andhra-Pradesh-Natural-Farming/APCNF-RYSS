@@ -47,6 +47,39 @@
     <div class="admin-wrapper">
         <div id="admin-header-placeholder"></div>
 
+        <!-- Admin Welcome Banner -->
+        <div class="aggregator-welcome admin-welcome">
+            <h2>Welcome, <span id="adminNameDisplay">Administrator</span>!</h2>
+            <p>Manage aggregator approvals, buyer registrations, and catchment requests.</p>
+        </div>
+
+        <!-- Admin Stats Cards -->
+        <div class="floating-stats">
+            <div class="dashboard-stats admin-stats">
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-value" id="statPendingAgg">0</div>
+                        <div class="stat-label">Pending Aggregators</div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-user-clock"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-value" id="statPendingBuyers">0</div>
+                        <div class="stat-label">Pending Buyers</div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-store"></i></div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-content">
+                        <div class="stat-value" id="statPendingCatchments">0</div>
+                        <div class="stat-label">Pending Catchments</div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-map-location-dot"></i></div>
+                </div>
+            </div>
+        </div>
+
         <main class="admin-content">
 
             <!-- PENDING AGGREGATORS TABLE -->
@@ -157,12 +190,11 @@
                                 <th>Mobile</th>
                                 <th>Documents</th>
                                 <th class="sortable" data-sort="status">Status</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody id="historyTableBody">
                             <tr>
-                                <td colspan="9" class="no-data-message">
+                                <td colspan="8" class="no-data-message">
                                     <i class="fas fa-spinner fa-spin"></i> Loading...
                                 </td>
                             </tr>
@@ -193,6 +225,7 @@
     <script src="../js/mock-data.js"></script>
     <script src="../js/apcnf.js"></script>
     <script src="../js/table-utils.js"></script>
+    <script src="../js/confirm-modal.js"></script>
     <script src="../js/admin-approvals.js"></script>
     <script src="../js/admin-loader.js"></script>
 

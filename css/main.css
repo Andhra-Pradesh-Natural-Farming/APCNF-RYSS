@@ -2367,3 +2367,53 @@ table.approval-table td:last-child {
         padding: 1rem;
     }
 }
+
+/* =================================
+   Back Button - Navigation Flow
+   ================================= */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.2rem;
+    background: transparent;
+    color: var(--primary-green);
+    border: 2px solid var(--primary-green);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin-bottom: 1rem;
+}
+
+.back-btn:hover {
+    background: var(--primary-green);
+    color: white;
+    transform: translateX(-3px);
+}
+
+.back-btn i {
+    font-size: 0.9rem;
+}
+
+.page-header-with-back {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.page-header-with-back h2 {
+    margin: 0;
+    flex: 1;
+}
+
+@media (max-width: 480px) {
+    .back-btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+    }
+}

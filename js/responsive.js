@@ -2,35 +2,40 @@
  * =============================================================================
  * RESPONSIVE.JS - Mobile Menu Toggle & Responsive Utilities
  * =============================================================================
+ * 
+ * This file provides mobile hamburger menu functionality and responsive utilities.
+ * The setupMobileMenu() function is exported globally so it can be called after
+ * headers are loaded dynamically via fetch().
  */
 
 (function () {
     'use strict';
 
-    // Wait for DOM to be ready
-    document.addEventListener('DOMContentLoaded', initResponsive);
-
-    function initResponsive() {
-        setupMobileMenu();
-        handleResize();
-        window.addEventListener('resize', debounce(handleResize, 150));
-    }
-
     /**
      * Setup Mobile Hamburger Menu
+     * This function is exposed globally as window.setupMobileMenu()
      */
     function setupMobileMenu() {
         // Find navigation elements
         const header = document.querySelector('header');
-        if (!header) return;
+        if (!header) {
+            console.warn('[responsive.js] No header found');
+            return;
+        }
 
         const nav = header.querySelector('nav') || header.querySelector('.main-nav');
         const headerContent = header.querySelector('.header-content');
 
-        if (!nav || !headerContent) return;
+        if (!nav || !headerContent) {
+            console.warn('[responsive.js] No nav or header-content found');
+            return;
+        }
 
         // Check if toggle already exists
-        if (header.querySelector('.mobile-menu-toggle')) return;
+        if (header.querySelector('.mobile-menu-toggle')) {
+            console.log('[responsive.js] Mobile menu already initialized');
+            return;
+        }
 
         // Create hamburger button
         const toggleBtn = document.createElement('button');
@@ -48,18 +53,21 @@
         closeBtn.setAttribute('aria-label', 'Close Menu');
         closeBtn.innerHTML = '<i class="fas fa-times"></i>';
 
-        // Insert toggle button before logout or at end of header
+        // Insert toggle button - try different positions
         const logoutSection = headerContent.querySelector('.header-logout');
         if (logoutSection) {
             headerContent.insertBefore(toggleBtn, logoutSection);
         } else {
+            // For admin header without logout section, append to header content
             headerContent.appendChild(toggleBtn);
         }
 
         // Insert overlay after header
-        header.parentNode.insertBefore(overlay, header.nextSibling);
+        if (!document.querySelector('.mobile-menu-overlay')) {
+            header.parentNode.insertBefore(overlay, header.nextSibling);
+        }
 
-        // Open menu
+        // Open menu handler
         toggleBtn.addEventListener('click', function (e) {
             e.preventDefault();
             e.stopPropagation();
@@ -89,6 +97,8 @@
                 closeMobileMenu(nav, overlay, closeBtn);
             });
         });
+
+        console.log('[responsive.js] Mobile menu initialized successfully');
     }
 
     /**
@@ -104,10 +114,10 @@
             nav.insertBefore(closeBtn, nav.firstChild);
         }
 
-        // Update toggle icon
-        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+        // Hide the toggle button when menu is open
+        const toggleBtn = document.querySelector('.mobile-menu-toggle');
         if (toggleBtn) {
-            toggleBtn.className = 'fas fa-times';
+            toggleBtn.style.display = 'none';
         }
     }
 
@@ -119,10 +129,10 @@
         overlay.classList.remove('active');
         document.body.style.overflow = '';
 
-        // Update toggle icon
-        const toggleBtn = document.querySelector('.mobile-menu-toggle i');
+        // Show the toggle button again
+        const toggleBtn = document.querySelector('.mobile-menu-toggle');
         if (toggleBtn) {
-            toggleBtn.className = 'fas fa-bars';
+            toggleBtn.style.display = '';
         }
     }
 
@@ -175,9 +185,27 @@
         return 'ontouchstart' in window || navigator.maxTouchPoints > 0;
     }
 
-    // Add touch class to body if touch device
-    if (isTouchDevice()) {
-        document.body.classList.add('touch-device');
+    /**
+     * Initialize responsive utilities
+     */
+    function initResponsive() {
+        // Setup mobile menu if header exists already (for inline headers like dashboard.html)
+        setupMobileMenu();
+
+        // Handle window resize
+        handleResize();
+        window.addEventListener('resize', debounce(handleResize, 150));
+
+        // Add touch class to body if touch device
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+        }
     }
+
+    // Initialize on DOMContentLoaded
+    document.addEventListener('DOMContentLoaded', initResponsive);
+
+    // Export setupMobileMenu globally so it can be called after async header load
+    window.setupMobileMenu = setupMobileMenu;
 
 })();

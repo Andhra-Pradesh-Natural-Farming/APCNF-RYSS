@@ -706,6 +706,216 @@
 
 
     // =========================================================================
+    // UNIFIED ADMIN DATA - Connected to Aggregator Portal
+    // =========================================================================
+
+    // Pending Aggregators awaiting admin approval
+    const MOCK_PENDING_AGGREGATORS = [
+        {
+            user_id: 'AGG-2619285',
+            org_name: 'Sunrise FPO',
+            type: 'FPO',
+            email: 'sunrise@fpo.org',
+            mobile: '9876543211',
+            documents: { registration: 'reg_sunrise.pdf', pan: 'pan_sunrise.pdf', aadhar: null }
+        },
+        {
+            user_id: 'AGG-2619286',
+            org_name: 'Kisan Collective',
+            type: 'Cooperative',
+            email: 'kisan@collective.in',
+            mobile: '9876543212',
+            documents: { registration: 'reg_kisan.pdf', pan: 'pan_kisan.pdf', aadhar: null }
+        },
+        {
+            user_id: 'AGG-2619287',
+            org_name: 'Green Valley Farmers',
+            type: 'SHG',
+            email: 'greenvalley@shg.org',
+            mobile: '9876543213',
+            documents: { registration: 'reg_green.pdf', pan: 'pan_green.pdf', aadhar: 'aadhar_green.pdf' }
+        }
+    ];
+
+    // Pending Buyers awaiting admin approval
+    const MOCK_PENDING_BUYERS = [
+        {
+            user_id: 'BUY-3719001',
+            org_name: 'Metro Mart',
+            type: 'Retailer',
+            email: 'metro@mart.com',
+            mobile: '9876543220',
+            documents: { registration: 'reg_metro.pdf', pan: 'pan_metro.pdf', aadhar: null }
+        },
+        {
+            user_id: 'BUY-3719002',
+            org_name: 'Organic Foods Hub',
+            type: 'Wholesaler',
+            email: 'organic@hub.com',
+            mobile: '9876543221',
+            documents: { registration: 'reg_organic.pdf', pan: 'pan_organic.pdf', aadhar: null }
+        }
+    ];
+
+    // Application History - CONNECTED to aggregator portal data
+    const MOCK_APPLICATION_HISTORY = [
+        // The main aggregator user - SAME as MOCK_USER
+        {
+            type: 'Aggregator',
+            user_id: MOCK_USER.user_id,  // AGG-2619284
+            org_name: MOCK_USER.org_name, // BAGYALAKSHMI Natural
+            org_type: MOCK_USER.org_type, // Individual
+            email: MOCK_USER.email,
+            mobile: MOCK_USER.phone,
+            status: 'Approved',
+            documents: { registration: 'reg_bagyalakshmi.pdf', pan: 'pan_bagyalakshmi.pdf', aadhar: 'aadhar_bagyalakshmi.pdf' }
+        },
+        // Additional approved aggregators
+        {
+            type: 'Aggregator',
+            user_id: 'AGG-2619280',
+            org_name: 'Raithu Mitra FPO',
+            org_type: 'FPO',
+            email: 'raithu@fpo.org',
+            mobile: '9876543201',
+            status: 'Approved',
+            documents: { registration: 'reg_raithu.pdf', pan: 'pan_raithu.pdf', aadhar: null }
+        },
+        // A rejected aggregator
+        {
+            type: 'Aggregator',
+            user_id: 'AGG-2619281',
+            org_name: 'Incomplete FPO Application',
+            org_type: 'FPO',
+            email: 'incomplete@fpo.org',
+            mobile: '9876543200',
+            status: 'Rejected',
+            documents: { registration: null, pan: null, aadhar: null }
+        },
+        // Approved buyer
+        {
+            type: 'Buyer',
+            user_id: 'BUY-3719000',
+            org_name: 'Fresh Harvest Stores',
+            org_type: 'Retailer',
+            email: 'fresh@harvest.com',
+            mobile: '9876543230',
+            status: 'Approved',
+            documents: { registration: 'reg_fresh.pdf', pan: 'pan_fresh.pdf', aadhar: null }
+        },
+        // Another approved buyer
+        {
+            type: 'Buyer',
+            user_id: 'BUY-3718999',
+            org_name: 'Farm to Table Co',
+            org_type: 'Restaurant Chain',
+            email: 'farm@table.com',
+            mobile: '9876543231',
+            status: 'Approved',
+            documents: { registration: 'reg_farmtable.pdf', pan: 'pan_farmtable.pdf', aadhar: null }
+        }
+    ];
+
+    // Pending Catchment Requests - from aggregators awaiting admin approval
+    const MOCK_PENDING_CATCHMENTS = [
+        {
+            acm_id: 'ACM-001',
+            aggregator_id: 'AGG-2619285',
+            aggregator_name: 'Sunrise FPO',
+            aggregator_type: 'FPO',
+            district_name: 'CHITTOOR',
+            mandal_name: 'GUDI PALLE',
+            village_name: 'KODATHANAPALLE',
+            crop_name: 'FINGER_MILLET_RAGI',
+            season: 'Kharif',
+            period: '2025-26',
+            creation_date: '2026-01-10',
+            status: 0
+        },
+        {
+            acm_id: 'ACM-002',
+            aggregator_id: 'AGG-2619286',
+            aggregator_name: 'Kisan Collective',
+            aggregator_type: 'Cooperative',
+            district_name: 'ANANTAPUR',
+            mandal_name: 'HINDUPUR',
+            village_name: 'HINDUPUR VILLAGE',
+            crop_name: 'PADDY',
+            season: 'Rabi',
+            period: '2025-26',
+            creation_date: '2026-01-12',
+            status: 0
+        }
+    ];
+
+    // Catchment History - approved/rejected catchments (includes aggregator's approved catchments)
+    const MOCK_CATCHMENT_HISTORY = [
+        // The main aggregator's approved catchments - CONNECTED
+        {
+            acm_id: 'ACM-100',
+            aggregator_id: MOCK_USER.user_id,
+            aggregator_name: MOCK_USER.org_name,
+            aggregator_type: MOCK_USER.org_type,
+            district_name: 'CHITTOOR',
+            mandal_name: 'GUDI PALLE',
+            village_name: 'AVULATHIMMANPALLE',
+            crop_name: 'FINGER_MILLET_RAGI',
+            season: 'Kharif',
+            period: '2025-26',
+            status: 1,
+            activation_date: '2025-12-15',
+            changed_by: 'Admin'
+        },
+        {
+            acm_id: 'ACM-101',
+            aggregator_id: MOCK_USER.user_id,
+            aggregator_name: MOCK_USER.org_name,
+            aggregator_type: MOCK_USER.org_type,
+            district_name: 'CHITTOOR',
+            mandal_name: 'GUDI PALLE',
+            village_name: 'AVULATHIMMANPALLE',
+            crop_name: 'PADDY',
+            season: 'Kharif',
+            period: '2025-26',
+            status: 1,
+            activation_date: '2025-12-15',
+            changed_by: 'Admin'
+        },
+        // Other aggregators' catchments
+        {
+            acm_id: 'ACM-102',
+            aggregator_id: 'AGG-2619280',
+            aggregator_name: 'Raithu Mitra FPO',
+            aggregator_type: 'FPO',
+            district_name: 'TIRUPATI',
+            mandal_name: 'CHANDRAGIRI',
+            village_name: 'SESHA PURAM',
+            crop_name: 'GROUNDNUT',
+            season: 'Kharif',
+            period: '2025-26',
+            status: 1,
+            activation_date: '2025-12-20',
+            changed_by: 'Admin'
+        },
+        // A rejected catchment
+        {
+            acm_id: 'ACM-103',
+            aggregator_id: 'AGG-2619281',
+            aggregator_name: 'Incomplete FPO',
+            aggregator_type: 'FPO',
+            district_name: 'KURNOOL',
+            mandal_name: 'ADONI',
+            village_name: 'ADONI VILLAGE',
+            crop_name: 'MAIZE',
+            season: 'Rabi',
+            period: '2025-26',
+            status: 2,
+            rejection_date: '2025-12-22',
+            changed_by: 'Admin'
+        }
+    ];
+
+    // =========================================================================
     // EXPOSE MOCK DATA GLOBALLY
     // =========================================================================
     window.MOCK_DATA = {
@@ -717,7 +927,13 @@
         seasons: MOCK_SEASONS,
         practicesMaster: PRACTICES_MASTER,
         batchPractices: BATCH_PRACTICES,
-        pgsCertificates: PGS_CERTIFICATES
+        pgsCertificates: PGS_CERTIFICATES,
+        // Admin Portal Data - Connected
+        pendingAggregators: MOCK_PENDING_AGGREGATORS,
+        pendingBuyers: MOCK_PENDING_BUYERS,
+        applicationHistory: MOCK_APPLICATION_HISTORY,
+        pendingCatchments: MOCK_PENDING_CATCHMENTS,
+        catchmentHistory: MOCK_CATCHMENT_HISTORY
     };
 
     // =========================================================================
@@ -766,6 +982,38 @@
         },
 
         saveBatch: function (batch) {
+            // Auto-assign practices if not set
+            if (!window.MOCK_DATA.batchPractices[batch.batchId]) {
+                // Select 4-6 random practices from the master list
+                const practicesMaster = window.MOCK_DATA.practicesMaster || PRACTICES_MASTER;
+                const shuffled = [...practicesMaster].sort(() => 0.5 - Math.random());
+                const randomCount = Math.floor(Math.random() * 3) + 4; // 4 to 6 practices
+                const selectedPractices = shuffled.slice(0, randomCount).map(p => p.id);
+
+                // Always include Beejamrutham (P001) and Chemical Free Practices (P008)
+                if (!selectedPractices.includes('P001')) selectedPractices.unshift('P001');
+                if (!selectedPractices.includes('P008')) selectedPractices.push('P008');
+
+                window.MOCK_DATA.batchPractices[batch.batchId] = selectedPractices;
+                console.log(`✅ Auto-assigned practices to batch ${batch.batchId}:`, selectedPractices);
+            }
+
+            // Auto-generate PGS Certificate if not set
+            if (!window.MOCK_DATA.pgsCertificates.find(c => c.batchId === batch.batchId)) {
+                const certId = `PGS-${new Date().getFullYear()}-${Math.floor(Math.random() * 900) + 100}`;
+                const newCert = {
+                    certId: certId,
+                    type: 'PGS-Green',
+                    name: 'Participatory Guarantee System Certificate',
+                    batchId: batch.batchId,
+                    validFrom: new Date().toISOString().split('T')[0],
+                    validTo: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+                    link: `#pgs-cert-${batch.batchId}`
+                };
+                window.MOCK_DATA.pgsCertificates.push(newCert);
+                console.log(`✅ Auto-generated PGS certificate for batch ${batch.batchId}:`, certId);
+            }
+
             // 1. Add to In-Memory MOCK_DATA (Critical for immediate use)
             if (!window.MOCK_DATA.batches.find(b => b.batchId === batch.batchId)) {
                 window.MOCK_DATA.batches.push(batch);
@@ -1055,91 +1303,37 @@
         }
 
         // =====================================================================
-        // ADMIN ENDPOINTS
+        // ADMIN ENDPOINTS - UNIFIED DATA MODEL
         // =====================================================================
 
         // --- ADMIN: Pending Aggregators ---
         if (urlStr.includes('/admin/pending_aggregators')) {
             console.log('✅ [MOCK] Returning pending aggregators');
+            // Get pending aggregators from unified registry
+            const pending = window.MOCK_DATA.pendingAggregators || [];
             return mockResponse({
-                count: 2,
-                aggregators: [
-                    {
-                        user_id: 'AGG-2619284',
-                        org_name: 'Sunrise FPO',
-                        type: 'FPO',
-                        email: 'sunrise@fpo.org',
-                        mobile: '9876543211',
-                        documents: { registration: null, pan: 'pan_sunrise.pdf', aadhar: null }
-                    },
-                    {
-                        user_id: 'AGG-2619285',
-                        org_name: 'Kisan Collective',
-                        type: 'Cooperative',
-                        email: 'kisan@collective.in',
-                        mobile: '9876543212',
-                        documents: { registration: 'reg_kisan.pdf', pan: 'pan_kisan.pdf', aadhar: null }
-                    }
-                ]
+                count: pending.length,
+                aggregators: pending
             });
         }
 
         // --- ADMIN: Pending Buyers ---
         if (urlStr.includes('/admin/pending_buyers')) {
             console.log('✅ [MOCK] Returning pending buyers');
+            const pending = window.MOCK_DATA.pendingBuyers || [];
             return mockResponse({
-                count: 1,
-                buyers: [
-                    {
-                        user_id: 'BUY-3719001',
-                        org_name: 'Metro Mart',
-                        type: 'Retailer',
-                        email: 'metro@mart.com',
-                        mobile: '9876543220',
-                        documents: { registration: 'reg_metro.pdf', pan: 'pan_metro.pdf', aadhar: null }
-                    }
-                ]
+                count: pending.length,
+                buyers: pending
             });
         }
 
         // --- ADMIN: Application History ---
         if (urlStr.includes('/admin/application_history')) {
             console.log('✅ [MOCK] Returning application history');
+            const history = window.MOCK_DATA.applicationHistory || [];
             return mockResponse({
-                count: 3,
-                history: [
-                    // ... (existing history items)
-                    {
-                        type: 'Aggregator',
-                        user_id: 'Aggregator',
-                        org_name: 'BAGYALAKSHMI Natural',
-                        org_type: 'Individual',
-                        email: 'baya@gmail.com',
-                        mobile: '8888888588',
-                        status: 'Approved',
-                        documents: { registration: 'reg_bagyalakshmi.pdf', pan: 'pan_bagyalakshmi.pdf', aadhar: null }
-                    },
-                    {
-                        type: 'Aggregator',
-                        user_id: 'AGG-2619280',
-                        org_name: 'Rejected FPO',
-                        org_type: 'FPO',
-                        email: 'rejected@fpo.org',
-                        mobile: '9876543200',
-                        status: 'Rejected',
-                        documents: { registration: null, pan: null, aadhar: null }
-                    },
-                    {
-                        type: 'Buyer',
-                        user_id: 'BUY-3719000',
-                        org_name: 'Approved Retail Store',
-                        org_type: 'Retailer',
-                        email: 'approved@retail.com',
-                        mobile: '9876543230',
-                        status: 'Approved',
-                        documents: { registration: 'reg_retail.pdf', pan: 'pan_retail.pdf', aadhar: null }
-                    }
-                ]
+                count: history.length,
+                history: history
             });
         }
 
@@ -1150,14 +1344,7 @@
         // --- ADMIN: Pending Catchment Requests ---
         if (urlStr.includes('/api/catchment/pending')) {
             console.log('✅ [MOCK] Returning pending catchment requests');
-            // Filter MOCK_CATCHMENTS where status is 0 (Pending) or 2 (which might be rejected, but usually 0 is pending)
-            // Currently our MOCK_CATCHMENTS are auto-approved (status 1).
-            // To show pending data, we can filter for specific IDs or just return a subset if none are found.
-            // For DEMO: If no pending requests, let's fake one if the list is empty, OR just rely on logic.
-            // But wait, user wants consistency. If I auto-approve, then it goes to history.
-            // So Pending list might be empty. 
-            // Let's return status === 0.
-            const pending = MOCK_CATCHMENTS.filter(c => c.status === 0 || c.status === 'Pending');
+            const pending = window.MOCK_DATA.pendingCatchments || [];
             return mockResponse({
                 success: true,
                 count: pending.length,
@@ -1168,7 +1355,7 @@
         // --- ADMIN: Catchment History ---
         if (urlStr.includes('/api/catchment/history')) {
             console.log('✅ [MOCK] Returning catchment history');
-            const history = MOCK_CATCHMENTS.filter(c => c.status === 1 || c.status === 2 || c.status === 'Approved' || c.status === 'Rejected');
+            const history = window.MOCK_DATA.catchmentHistory || [];
             return mockResponse({
                 success: true,
                 total: history.length,
@@ -1181,8 +1368,16 @@
         if (urlStr.includes('/api/catchment/approve/')) {
             const id = urlStr.split('/approve/')[1];
             console.log(`✅ [MOCK] Approving catchment: ${id}`);
-            const catchItem = MOCK_CATCHMENTS.find(c => c.acm_id === id || c.catchment_id === id);
-            if (catchItem) catchItem.status = 1;
+
+            // Move from pending to history
+            const pendingIdx = (window.MOCK_DATA.pendingCatchments || []).findIndex(c => c.acm_id === id);
+            if (pendingIdx > -1) {
+                const item = window.MOCK_DATA.pendingCatchments.splice(pendingIdx, 1)[0];
+                item.status = 1;
+                item.activation_date = new Date().toISOString().split('T')[0];
+                item.changed_by = 'Admin';
+                window.MOCK_DATA.catchmentHistory.push(item);
+            }
 
             return mockResponse({
                 success: true,
@@ -1195,8 +1390,16 @@
         if (urlStr.includes('/api/catchment/reject/')) {
             const id = urlStr.split('/reject/')[1];
             console.log(`✅ [MOCK] Rejecting catchment: ${id}`);
-            const catchItem = MOCK_CATCHMENTS.find(c => c.acm_id === id || c.catchment_id === id);
-            if (catchItem) catchItem.status = 2; // Rejected
+
+            // Move from pending to history as rejected
+            const pendingIdx = (window.MOCK_DATA.pendingCatchments || []).findIndex(c => c.acm_id === id);
+            if (pendingIdx > -1) {
+                const item = window.MOCK_DATA.pendingCatchments.splice(pendingIdx, 1)[0];
+                item.status = 2;
+                item.rejection_date = new Date().toISOString().split('T')[0];
+                item.changed_by = 'Admin';
+                window.MOCK_DATA.catchmentHistory.push(item);
+            }
 
             return mockResponse({
                 success: true,
@@ -1204,23 +1407,109 @@
             });
         }
 
-        // --- ADMIN: Approve/Reject Aggregator ---
-        if (urlStr.includes('/admin/approve_aggregator/') || urlStr.includes('/admin/reject_aggregator/')) {
-            const action = urlStr.includes('approve') ? 'approved' : 'rejected';
-            console.log(`✅ [MOCK] Aggregator ${action}`);
+        // --- ADMIN: Approve Aggregator ---
+        if (urlStr.includes('/admin/approve_aggregator/')) {
+            const id = urlStr.split('/approve_aggregator/')[1];
+            console.log(`✅ [MOCK] Approving aggregator: ${id}`);
+
+            // Move from pending to history
+            const pendingIdx = (window.MOCK_DATA.pendingAggregators || []).findIndex(a => a.user_id === id);
+            if (pendingIdx > -1) {
+                const agg = window.MOCK_DATA.pendingAggregators.splice(pendingIdx, 1)[0];
+                window.MOCK_DATA.applicationHistory.push({
+                    type: 'Aggregator',
+                    user_id: agg.user_id,
+                    org_name: agg.org_name,
+                    org_type: agg.type,
+                    email: agg.email,
+                    mobile: agg.mobile,
+                    status: 'Approved',
+                    documents: agg.documents
+                });
+            }
+
             return mockResponse({
                 success: true,
-                message: `Aggregator has been ${action} successfully!`
+                message: 'Aggregator has been approved successfully!'
             });
         }
 
-        // --- ADMIN: Approve/Reject Buyer ---
-        if (urlStr.includes('/admin/approve_buyer/') || urlStr.includes('/admin/reject_buyer/')) {
-            const action = urlStr.includes('approve') ? 'approved' : 'rejected';
-            console.log(`✅ [MOCK] Buyer ${action}`);
+        // --- ADMIN: Reject Aggregator ---
+        if (urlStr.includes('/admin/reject_aggregator/')) {
+            const id = urlStr.split('/reject_aggregator/')[1];
+            console.log(`✅ [MOCK] Rejecting aggregator: ${id}`);
+
+            // Move from pending to history as rejected
+            const pendingIdx = (window.MOCK_DATA.pendingAggregators || []).findIndex(a => a.user_id === id);
+            if (pendingIdx > -1) {
+                const agg = window.MOCK_DATA.pendingAggregators.splice(pendingIdx, 1)[0];
+                window.MOCK_DATA.applicationHistory.push({
+                    type: 'Aggregator',
+                    user_id: agg.user_id,
+                    org_name: agg.org_name,
+                    org_type: agg.type,
+                    email: agg.email,
+                    mobile: agg.mobile,
+                    status: 'Rejected',
+                    documents: agg.documents
+                });
+            }
+
             return mockResponse({
                 success: true,
-                message: `Buyer has been ${action} successfully!`
+                message: 'Aggregator has been rejected successfully!'
+            });
+        }
+
+        // --- ADMIN: Approve Buyer ---
+        if (urlStr.includes('/admin/approve_buyer/')) {
+            const id = urlStr.split('/approve_buyer/')[1];
+            console.log(`✅ [MOCK] Approving buyer: ${id}`);
+
+            const pendingIdx = (window.MOCK_DATA.pendingBuyers || []).findIndex(b => b.user_id === id);
+            if (pendingIdx > -1) {
+                const buyer = window.MOCK_DATA.pendingBuyers.splice(pendingIdx, 1)[0];
+                window.MOCK_DATA.applicationHistory.push({
+                    type: 'Buyer',
+                    user_id: buyer.user_id,
+                    org_name: buyer.org_name,
+                    org_type: buyer.type,
+                    email: buyer.email,
+                    mobile: buyer.mobile,
+                    status: 'Approved',
+                    documents: buyer.documents
+                });
+            }
+
+            return mockResponse({
+                success: true,
+                message: 'Buyer has been approved successfully!'
+            });
+        }
+
+        // --- ADMIN: Reject Buyer ---
+        if (urlStr.includes('/admin/reject_buyer/')) {
+            const id = urlStr.split('/reject_buyer/')[1];
+            console.log(`✅ [MOCK] Rejecting buyer: ${id}`);
+
+            const pendingIdx = (window.MOCK_DATA.pendingBuyers || []).findIndex(b => b.user_id === id);
+            if (pendingIdx > -1) {
+                const buyer = window.MOCK_DATA.pendingBuyers.splice(pendingIdx, 1)[0];
+                window.MOCK_DATA.applicationHistory.push({
+                    type: 'Buyer',
+                    user_id: buyer.user_id,
+                    org_name: buyer.org_name,
+                    org_type: buyer.type,
+                    email: buyer.email,
+                    mobile: buyer.mobile,
+                    status: 'Rejected',
+                    documents: buyer.documents
+                });
+            }
+
+            return mockResponse({
+                success: true,
+                message: 'Buyer has been rejected successfully!'
             });
         }
 

@@ -508,11 +508,19 @@ document.addEventListener("DOMContentLoaded", () => {
      * @param {string} batchId The ID of the batch to cancel.
      * @param {HTMLElement} rowElement The table row element to remove.
      */
-    function cancelBatch(batchId, rowElement) {
+    async function cancelBatch(batchId, rowElement) {
         console.log(`Cancelling batch: ${batchId}`);
 
-        // 1. Confirm with the user
-        if (!confirm(`Are you sure you want to cancel batch B...${batchId.slice(-6)}? This action cannot be undone.`)) {
+        // 1. Confirm with the user using custom modal
+        const confirmed = await showConfirmModal({
+            title: 'Cancel Batch',
+            message: `Are you sure you want to cancel batch B...${batchId.slice(-6)}? This action cannot be undone.`,
+            confirmText: 'Yes, Cancel',
+            cancelText: 'No, Keep It',
+            type: 'danger'
+        });
+
+        if (!confirmed) {
             return; // User clicked "Cancel"
         }
 

@@ -101,10 +101,40 @@ const paginationState = {
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('✅ Admin Approvals page loaded');
+    updateAdminStats();
     loadPendingAggregators();
     loadPendingBuyers();
     loadApplicationHistory();
 });
+
+/**
+ * Update Admin Dashboard Stats and Name
+ */
+function updateAdminStats() {
+    // Set admin name from localStorage
+    const adminName = document.getElementById('adminNameDisplay');
+    if (adminName) {
+        const user = JSON.parse(localStorage.getItem('user') || '{}');
+        adminName.textContent = user.org_name || 'Administrator';
+    }
+
+    // Update stat cards from MOCK_DATA
+    if (window.MOCK_DATA) {
+        const statAgg = document.getElementById('statPendingAgg');
+        const statBuyers = document.getElementById('statPendingBuyers');
+        const statCatchments = document.getElementById('statPendingCatchments');
+
+        if (statAgg) {
+            statAgg.textContent = (window.MOCK_DATA.pendingAggregators || []).length;
+        }
+        if (statBuyers) {
+            statBuyers.textContent = (window.MOCK_DATA.pendingBuyers || []).length;
+        }
+        if (statCatchments) {
+            statCatchments.textContent = (window.MOCK_DATA.pendingCatchments || []).length;
+        }
+    }
+}
 
 // ============================================================================
 // LOAD PENDING AGGREGATORS
@@ -365,8 +395,15 @@ function changePage(tableType, newPage) {
 // ============================================================================
 
 async function approveAggregator(id, name) {
-    if (!confirm(`Approve ${name}?`)) return;
-    // Mock logic: call API
+    const confirmed = await showConfirmModal({
+        title: 'Approve Aggregator',
+        message: `Are you sure you want to approve ${name}?`,
+        confirmText: 'Approve',
+        cancelText: 'Cancel',
+        type: 'success'
+    });
+    if (!confirmed) return;
+
     await authFetch(`${window.API_BASE_URL}/admin/approve_aggregator/${id}`, { method: 'PUT' });
     alert('Approved!');
     loadPendingAggregators();
@@ -374,7 +411,15 @@ async function approveAggregator(id, name) {
 }
 
 async function rejectAggregator(id, name) {
-    if (!confirm(`Reject ${name}?`)) return;
+    const confirmed = await showConfirmModal({
+        title: 'Reject Aggregator',
+        message: `Are you sure you want to reject ${name}?`,
+        confirmText: 'Reject',
+        cancelText: 'Cancel',
+        type: 'danger'
+    });
+    if (!confirmed) return;
+
     await authFetch(`${window.API_BASE_URL}/admin/reject_aggregator/${id}`, { method: 'PUT' });
     alert('Rejected!');
     loadPendingAggregators();
@@ -382,7 +427,15 @@ async function rejectAggregator(id, name) {
 }
 
 async function approveBuyer(id, name) {
-    if (!confirm(`Approve ${name}?`)) return;
+    const confirmed = await showConfirmModal({
+        title: 'Approve Buyer',
+        message: `Are you sure you want to approve ${name}?`,
+        confirmText: 'Approve',
+        cancelText: 'Cancel',
+        type: 'success'
+    });
+    if (!confirmed) return;
+
     await authFetch(`${window.API_BASE_URL}/admin/approve_buyer/${id}`, { method: 'PUT' });
     alert('Approved!');
     loadPendingBuyers();
@@ -390,7 +443,15 @@ async function approveBuyer(id, name) {
 }
 
 async function rejectBuyer(id, name) {
-    if (!confirm(`Reject ${name}?`)) return;
+    const confirmed = await showConfirmModal({
+        title: 'Reject Buyer',
+        message: `Are you sure you want to reject ${name}?`,
+        confirmText: 'Reject',
+        cancelText: 'Cancel',
+        type: 'danger'
+    });
+    if (!confirmed) return;
+
     await authFetch(`${window.API_BASE_URL}/admin/reject_buyer/${id}`, { method: 'PUT' });
     alert('Rejected!');
     loadPendingBuyers();
@@ -405,3 +466,4 @@ window.rejectBuyer = rejectBuyer;
 window.viewDocuments = function (id, type, docs) {
     alert(`Viewing documents for ${type} ${id}:\n\n` + JSON.stringify(docs, null, 2));
 };
+

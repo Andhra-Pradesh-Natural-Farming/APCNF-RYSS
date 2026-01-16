@@ -77,6 +77,7 @@ nav.mobile-menu-active {
     from {
         transform: translateX(100%);
     }
+
     to {
         transform: translateX(0);
     }
@@ -176,6 +177,7 @@ nav.mobile-menu-active a:hover {
 }
 
 @media screen and (max-width: 768px) {
+
     /* Smaller logo on mobile */
     .logo-img {
         width: 45px !important;
@@ -424,18 +426,6 @@ nav.mobile-menu-active a:hover {
         -webkit-overflow-scrolling: touch;
     }
 
-    /* Scroll indicator */
-    .table-wrapper::after {
-        content: '← Scroll →';
-        display: block;
-        text-align: center;
-        padding: 0.5rem;
-        font-size: 0.8rem;
-        color: #666;
-        background: #f5f7fa;
-        border-radius: 0 0 8px 8px;
-    }
-
     .table-card .table-search-input {
         font-size: 1rem !important;
         padding: 0.85rem 1rem !important;
@@ -624,26 +614,163 @@ nav.mobile-menu-active a:hover {
 }
 
 /* =============================================================================
-   ADMIN NAV RESPONSIVE
+   ADMIN HEADER & NAV RESPONSIVE
    ============================================================================= */
 
+/* Admin header base styling */
+.admin-header {
+    background: linear-gradient(135deg, #143d14 0%, #1a5a1a 100%);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+}
+
+.admin-header .header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.75rem 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.admin-header .logo-section {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.admin-header .brand-text h1 {
+    color: white;
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.admin-header .brand-text .subtitle {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.8rem;
+    margin: 0;
+}
+
+.admin-header .admin-nav {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.admin-header .admin-nav-menu {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.5rem;
+}
+
+.admin-header .admin-nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.admin-header .admin-nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.admin-header .admin-nav-link.active {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.admin-header .header-logout {
+    display: flex;
+    align-items: center;
+}
+
+.admin-header .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.admin-header .logout-btn:hover {
+    background: rgba(220, 38, 38, 0.8);
+    border-color: rgba(220, 38, 38, 0.8);
+}
+
+/* Admin header hamburger color on dark background */
+.admin-header .mobile-menu-toggle i {
+    color: white;
+}
+
+.admin-header .mobile-menu-toggle:hover i {
+    color: rgba(255, 255, 255, 0.8);
+}
+
 @media screen and (max-width: 992px) {
-    .admin-nav-menu {
+
+    .admin-header .admin-nav,
+    .admin-header .admin-nav-menu {
         display: none !important;
     }
 
-    nav.mobile-menu-active .admin-nav-menu {
+    .admin-header .header-content {
+        padding: 0.75rem 1rem;
+    }
+
+    .admin-header .logout-btn span {
+        display: none;
+    }
+
+    .admin-header .logout-btn {
+        padding: 0.5rem;
+    }
+
+    /* Admin mobile menu active state */
+    .admin-header nav.mobile-menu-active,
+    .admin-nav.mobile-menu-active {
+        display: block !important;
+        position: fixed;
+        top: 0;
+        right: 0;
+        width: 280px;
+        max-width: 80vw;
+        height: 100vh;
+        background: #fff;
+        box-shadow: -4px 0 20px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        padding: 1rem;
+        padding-top: 60px;
+        overflow-y: auto;
+        animation: slideInRight 0.3s ease;
+    }
+
+    .admin-header nav.mobile-menu-active .admin-nav-menu,
+    .admin-nav.mobile-menu-active .admin-nav-menu {
         display: flex !important;
         flex-direction: column;
         width: 100%;
     }
 
-    .admin-nav-menu li {
+    .admin-header nav.mobile-menu-active .admin-nav-menu li,
+    .admin-nav.mobile-menu-active .admin-nav-menu li {
         width: 100%;
     }
 
-    .admin-nav-link,
-    .admin-nav-logout {
+    .admin-header nav.mobile-menu-active .admin-nav-link,
+    .admin-nav.mobile-menu-active .admin-nav-link {
         display: flex !important;
         align-items: center !important;
         gap: 0.75rem !important;
@@ -653,16 +780,60 @@ nav.mobile-menu-active a:hover {
         background: #f5f7fa !important;
         margin-bottom: 0.5rem !important;
         color: #143d14 !important;
+        text-decoration: none;
     }
 
-    .admin-nav-link:hover,
-    .admin-nav-logout:hover {
+    .admin-header nav.mobile-menu-active .admin-nav-link:hover,
+    .admin-nav.mobile-menu-active .admin-nav-link:hover {
         background: #e8f5e9 !important;
     }
 
-    .admin-nav-logout {
-        background: #fee2e2 !important;
-        color: #dc2626 !important;
+    .admin-header nav.mobile-menu-active .admin-nav-link.active,
+    .admin-nav.mobile-menu-active .admin-nav-link.active {
+        background: #d4edda !important;
+        color: #143d14 !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .admin-header .brand-text h1 {
+        font-size: 1.1rem;
+    }
+
+    .admin-header .brand-text .subtitle {
+        font-size: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .admin-header .header-content {
+        padding: 0.5rem 0.75rem;
+    }
+
+    .admin-header .brand-text h1 {
+        font-size: 1rem;
+    }
+}
+
+/* =============================================================================
+   ADMIN WRAPPER & CONTENT RESPONSIVE
+   ============================================================================= */
+
+@media screen and (max-width: 768px) {
+    .admin-wrapper {
+        min-height: 100vh;
+    }
+
+    .admin-content {
+        padding: 1rem !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .admin-content {
+        padding: 0.75rem !important;
     }
 }
 
@@ -716,6 +887,7 @@ nav.mobile-menu-active a:hover {
    ============================================================================= */
 
 @media print {
+
     header,
     footer,
     .mobile-menu-toggle,
@@ -748,7 +920,8 @@ nav.mobile-menu-active a:hover {
         border-collapse: collapse;
     }
 
-    th, td {
+    th,
+    td {
         border: 1px solid #000;
         padding: 0.5rem;
     }

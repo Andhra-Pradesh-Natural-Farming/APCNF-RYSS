@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APCNF-RySS Traceability - Crop Management</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/table-styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+</head>
+
+<body>
+
+    <div class="admin-wrapper">
+        <div id="admin-header-placeholder"></div>
+
+        <main class="admin-content">
+
+            <!-- Crop Master List - Using table-card for consistent styling -->
+            <div class="table-card">
+                <div class="table-card-title">
+                    <span class="title-icon">🌾</span>
+                    <span>Crop Master List</span>
+                </div>
+                <div class="table-card-title-underline"></div>
+
+                <!-- Search Bar -->
+                <div class="table-search-container">
+                    <input type="text" class="table-search-input" id="cropSearch"
+                        placeholder="Search by: Crop ID, Crop Name, Storage Conditions..." oninput="searchCrops()">
+                </div>
+
+                <!-- Table Wrapper -->
+                <div class="table-wrapper">
+                    <table class="data-table" id="crop-master-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable" data-sort="crop_id">Crop ID</th>
+                                <th class="sortable" data-sort="crop_name">Crop Name</th>
+                                <th class="sortable" data-sort="shelf_life">Shelf Life (Days)</th>
+                                <th class="sortable" data-sort="storage">Storage Conditions</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cropTableBody">
+                            <tr>
+                                <td colspan="5" class="no-data-message">Loading crops...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div id="cropPagination"></div>
+            </div>
+
+        </main>
+
+        <div id="admin-footer-placeholder"></div>
+    </div>
+
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/admin-crops.js"></script>
+    <script src="../js/admin-loader.js"></script>
+
+</body>
+
+</html>

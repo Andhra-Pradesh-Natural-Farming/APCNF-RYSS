@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APCNF-RySS Traceability - Aggregator Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/table-styles.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        /* Minimal overrides - main styling is in main.css .floating-stats */
+    </style>
+</head>
+
+<body>
+
+    <!-- Aggregator Dashboard Header -->
+    <header id="mainHeader" class="aggregator-header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="../img/RYSS_Logo.png" alt="RYSS APCNF Logo" class="logo-img">
+                <div class="brand-text">
+                    <h1>APCNF-RySS</h1>
+                    <p class="subtitle">Traceability Portal</p>
+                </div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="dashboard.html" class="nav-link active"><i
+                                class="fas fa-th-large"></i><span>Dashboard</span></a></li>
+                    <li><a href="catchment-area.html" class="nav-link"><i
+                                class="fas fa-map-location-dot"></i><span>Catchment Area</span></a></li>
+                    <li><a href="mybatch.html" class="nav-link"><i class="fas fa-boxes-stacked"></i><span>My
+                                Batches</span></a></li>
+                    <li><a href="buying-interest.html" class="nav-link"><i
+                                class="fas fa-heart"></i><span>Interests</span></a></li>
+                    <li><a href="profile.html" class="nav-link"><i class="fas fa-user"></i><span>Aggregator</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="header-logout">
+                <button class="logout-btn" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Welcome Banner with Decorative Background -->
+    <div class="aggregator-welcome">
+        <h2>Welcome, <span id="aggregatorNameDisplay">Aggregator</span>!</h2>
+        <p>View your catchment areas and farmer list below.</p>
+    </div>
+
+    <!-- Floating Stat Cards (overlap the banner) -->
+    <div class="floating-stats">
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-value" id="statCatchments">0</div>
+                    <div class="stat-label">Total Approved Catchment Areas</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-map-location-dot"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-value" id="statFarmers">0</div>
+                    <div class="stat-label">Total Approved Farmers</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-user-group"></i></div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-content">
+                    <div class="stat-value" id="statBatches">0</div>
+                    <div class="stat-label">Total Batches</div>
+                </div>
+                <div class="stat-icon"><i class="fas fa-boxes-stacked"></i></div>
+            </div>
+        </div>
+    </div>
+
+    <main id="dashboard" class="container">
+
+        <!-- Table 1: My Catchment Areas -->
+        <div class="table-card">
+            <div class="table-card-title">
+                <span class="title-icon">🗺️</span>
+                <span>My Catchment Areas</span>
+            </div>
+            <div class="table-card-title-underline"></div>
+
+            <!-- Search Bar -->
+            <div class="table-search-container">
+                <input type="text" class="table-search-input" id="catchmentSearch"
+                    placeholder="Search by: Aggregator ID, District, Mandal, Village, Crop..."
+                    oninput="searchDashboardCatchments()">
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table class="data-table" id="catchmentTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="aggregator_id">Aggregator ID</th>
+                            <th class="sortable" data-sort="district">District</th>
+                            <th class="sortable" data-sort="mandal">Mandal</th>
+                            <th class="sortable" data-sort="panchayat">Panchayat</th>
+                            <th class="sortable" data-sort="village">Village</th>
+                            <th class="sortable" data-sort="crop">Crop</th>
+                            <th class="sortable" data-sort="status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="catchmentTableBody">
+                        <tr>
+                            <td colspan="7" class="no-data-message">Loading catchment areas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div id="catchmentPagination"></div>
+        </div>
+
+        <!-- Table 2: My Farmer List -->
+        <div class="table-card">
+            <div class="table-card-title">
+                <span class="title-icon">👥</span>
+                <span>My Farmer List</span>
+            </div>
+            <div class="table-card-title-underline"></div>
+
+            <!-- Search Bar -->
+            <div class="table-search-container">
+                <input type="text" class="table-search-input" id="farmerSearch"
+                    placeholder="Search by: Farmer ID, Name, Category, District, Mandal, Village, Crop..."
+                    oninput="searchDashboardFarmers()">
+            </div>
+
+            <!-- Table -->
+            <div class="table-wrapper">
+                <table class="data-table" id="farmerTable">
+                    <thead>
+                        <tr>
+                            <th class="sortable" data-sort="farmer_id">Farmer ID</th>
+                            <th class="sortable" data-sort="farmer_name">Farmer Name</th>
+                            <th class="sortable" data-sort="category">Category</th>
+                            <th class="sortable" data-sort="district">District</th>
+                            <th class="sortable" data-sort="mandal">Mandal</th>
+                            <th class="sortable" data-sort="panchayat">Panchayat</th>
+                            <th class="sortable" data-sort="village">Village</th>
+                            <th class="sortable" data-sort="crop">Crop</th>
+                            <th class="sortable" data-sort="status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="farmerTableBody">
+                        <tr>
+                            <td colspan="9" class="no-data-message">Loading farmer list...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div id="farmerPagination"></div>
+        </div>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Mock Data Engine (must be first) -->
+    <script src="../js/mock-data.js"></script>
+    <script src="../js/table-utils.js"></script>
+    <script src="../js/dashboard.js"></script>
+    <script src="../js/app-loader.js"></script>
+    <script src="../js/responsive.js"></script>
+
+</body>
+
+</html>
